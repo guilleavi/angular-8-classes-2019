@@ -1,0 +1,7 @@
+<div class="row contact-list p-3">
+  <app-contacts-card *ngFor="let item of contacts; let i = index;"
+                     [contact]="item"
+                     (newFavoriteValue)="updateFavoriteFlag($event, item.id)"
+                     class="col-3">
+  </app-contacts-card>
+</div>

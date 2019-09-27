@@ -1,0 +1,13 @@
+<div class="custom-control custom-switch">
+  <input #myToggle
+         type="checkbox"
+         id="customSwitch-{{index}}"
+         class="custom-control-input"
+         [checked]="checkedValue"
+         (change)="onToggleChanged(myToggle)"
+         >
+  <label class="custom-control-label"
+         for="customSwitch-{{index}}"> 
+    {{ label }}
+  </label>
+</div>
