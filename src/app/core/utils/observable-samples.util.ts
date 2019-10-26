@@ -18,7 +18,7 @@ export class ObservableSamplesUtil {
   // Hot Observable: emits as soon as is created. Like a Subject.
 
   triggerMethod(): void {
-    this.unsubscribeWithFinalize();
+    // this.unsubscribeWithFinalize();
   }
 
   getValuesWithDifTypes(): void {
@@ -211,6 +211,8 @@ export class ObservableSamplesUtil {
           console.log('Finally');
           mySubscription.unsubscribe();
           console.log(mySubscription);
+          mySubscription.unsubscribe();
+          console.log(mySubscription);
         }
       )
     ).subscribe({
@@ -223,6 +225,7 @@ export class ObservableSamplesUtil {
         },
         complete: () => {
           console.log(`That's all Folks!`);
+          console.log(mySubscription);
         }
     });
 

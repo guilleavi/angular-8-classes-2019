@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ObservableSamplesUtil } from './core/utils/observable-samples.util';
+// import { ObservableSamplesUtil } from './core/utils/observable-samples.util';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,11 @@ export class AppComponent implements OnInit {
   title = 'angular-classes';
 
   constructor(
-    private observableSamplesUtil: ObservableSamplesUtil) {
+    // private observableSamplesUtil: ObservableSamplesUtil
+  ) {
   }
 
   ngOnInit(): void {
-    this.observableSamplesUtil.triggerMethod();
+    // this.observableSamplesUtil.triggerMethod();
   }
 }

@@ -255,3 +255,30 @@ Para realizar todo esto, los utils se valen de los Observables y los BehaviorSub
 
 ##### Observables
 https://www.youtube.com/watch?v=Tux1nhBPl_w&t=737s
+
+# HTTP Client
+
+HttpClient es un modulo de Angular que permite realizar las llamadas al BE.
+Para tener disponible este modulo a lo largo de toda la aplicacion, lo unico que deben hacer es importarlo en AppModule.
+
+## Simulando llamadas al BE
+Como en esta app de ejemplo no tenemos un BE disponible, vamos a utilizar una tool de Angular que crea un base de datos en memoria sobre la cual se pueden realizar http requests.
+
+npm install angular-in-memory-web-api --save
+
+En AppModule, importar:
+```
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+```
+y lo siguiente luego del HttpModule
+
+```
+// The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+// and returns simulated server responses.
+// Remove it when a real server is ready to receive requests.
+HttpClientInMemoryWebApiModule.forRoot(
+  InMemoryDataService, { dataEncapsulation: false }
+)
+```
+

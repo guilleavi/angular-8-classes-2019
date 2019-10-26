@@ -15,14 +15,17 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
   contacts: md.Contact[];
 
+  // contacts$: Observable<md.Contact[]>;
+
   constructor(
     private contactUtil: ContactUtil,
   ) { }
 
   ngOnInit() {
+    // this.contacts$ = this.contactUtil.contacts$;
     this.mySubscription.add(this.contactUtil.contacts$.subscribe(
         result => {
-          this.contacts = result;
+          this.contacts = result; // TODO: move to async pipe
         },
         error => {
           console.log('Error!');
@@ -33,6 +36,7 @@ export class ContactsListComponent implements OnInit, OnDestroy {
 
   updateFavoriteFlag(newValue: boolean, contactId: number): void {
     console.log(`Set to ${newValue} the contact ${contactId}`);
+    this.contactUtil.updateFavoriteFlag(contactId, newValue);
   }
 
   ngOnDestroy(): void {
