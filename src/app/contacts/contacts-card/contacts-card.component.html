@@ -1,0 +1,8 @@
+<div class="card my-card p-3">
+  <app-slide-toggle [index]="contact.id"
+                    [label]="'Favorite'"
+                    [checkedValue]="contact.favorite"
+                    (toggleChange)="getNewFavoriteFlag($event)"></app-slide-toggle>
+  {{ contact.firstName }} {{ contact.lastName }}
+  {{ contact.favorite }}
+</div> 

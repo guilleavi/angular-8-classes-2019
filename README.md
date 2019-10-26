@@ -215,15 +215,20 @@ Los smart components, son los padres de un conjunto de dumb components. Son los 
 
 # Services
 
-Los services son aquellos archivos donde se guarda toda la logica de la aplicacion, sobre todo aquello que se necesita que este disponible para varios componentes u otros services.
-Por lo general, los services son singletons. Por tal motivo, se crean dentro del modulo CoreModule.
-Al momento de crearlo, no es necesario declararlo en la metadata del CoreModule. Sino que se agrega cierta metadata en el decorator del propio servicio para indicar que va a estar disponible a lo largo de toda la aplicacion y como un singleton.
+Los services son aquellos archivos donde se escribe la mayor parte de la logica de la aplicacion. Sobre todo, aquello que se necesita que esté disponible desde varios componentes u otros services.
+Por lo general, los services son singletons y se crean dentro del modulo CoreModule.
+Al momento de crearlos mediante Angular CLI, se agrega cierta metadata en el decorator del service
 ```
 @Injectable({
   providedIn: 'root'
 })
 ```
-Los dos usos principales que vamos a darles a los services son: llamadas al backend y comunicar y compartir data entre componentes y servicios.
+Esta metadata indica que el servicio va a estar disponible a lo largo de toda la aplicacion y en forma de singleton.
+Cuando un service contiene esta metadata, no es necesario vover a agregarlo en la metadata del CoreModule.
+
+Los dos usos principales que vamos a darles a los services son: 
+- llamadas al backend;
+- procesar y compartir data entre distintos componentes y services (store).
 Si bien todos ellos son services, a modo organizativo, en nuestros proyectos los clasificamos en Services (los que contienen unicamente las llamadas al BE) y utils (los que contienen toda la demas logica).
 
 #### Creando nuestro primer util y service
@@ -240,3 +245,40 @@ Como los utils son una convencion nuestra, no existe un ng generate util... pero
 
 3. Injectar el util en el constructor del smart component.
 4. Injectar el service en el constructor del util.
+
+#### Observables y BehaviorSubject
+Como se comento anteriormente, los utils -ademas de contener toda la logica- funcionan como una especie de 'store' o 'data source'.
+Los mismos mantienen un unico 'source of true' al cual se van a subscribir todos los componentes/services/utils que necesiten acceder a la data almacenada.
+Esta subscripcion, ademas, les va a permitir mantener la instancia local (en el componente) de dicha informacion 'sincronizada' con lo almacenado en el util.
+
+Para realizar todo esto, los utils se valen de los Observables y los BehaviorSubjects.
+
+##### Observables
+https://www.youtube.com/watch?v=Tux1nhBPl_w&t=737s
+
+# HTTP Client
+
+HttpClient es un modulo de Angular que permite realizar las llamadas al BE.
+Para tener disponible este modulo a lo largo de toda la aplicacion, lo unico que deben hacer es importarlo en AppModule.
+
+## Simulando llamadas al BE
+Como en esta app de ejemplo no tenemos un BE disponible, vamos a utilizar una tool de Angular que crea un base de datos en memoria sobre la cual se pueden realizar http requests.
+
+npm install angular-in-memory-web-api --save
+
+En AppModule, importar:
+```
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+```
+y lo siguiente luego del HttpModule
+
+```
+// The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+// and returns simulated server responses.
+// Remove it when a real server is ready to receive requests.
+HttpClientInMemoryWebApiModule.forRoot(
+  InMemoryDataService, { dataEncapsulation: false }
+)
+```
+
